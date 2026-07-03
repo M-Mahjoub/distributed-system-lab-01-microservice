@@ -23,49 +23,29 @@ namespace UnitTests.Domain
         [Test]
         public void Should_Throw_When_Name_Is_Empty()
         {
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
-                var produt = new Product("", "T100", "USD");
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentException)
-                    Assert.Pass();
-            }
-
-            Assert.Fail();
+                var produt = new Product("", "T100", "");
+            });
         }
 
         [Test]
         public void Should_Throw_When_SKU_Is_Empty()
         {
-            try
+            Assert.Throws<ArgumentException>(() =>
             {
                 var produt = new Product("TV", "", "USD");
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentException)
-                    Assert.Pass();
-            }
-
-            Assert.Fail();
+            });
         }
 
         [Test]
         public void Should_Throw_When_Currency_Is_Empty()
         {
-            try
-            {
-                var produt = new Product("TV", "", "");
-            }
-            catch (Exception ex)
-            {
-                if (ex is ArgumentException)
-                    Assert.Pass();
-            }
 
-            Assert.Fail();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                var produt = new Product("TV", "T100", "");
+            });
         }
     }
 }
