@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using Domain.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Domain
 {
     public class Product
     {
-        public Product(string name, string sku, string currency)
+        public Product(string name, string sku, string currency, decimal price)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("name");
@@ -17,14 +18,16 @@ namespace Domain
             if (string.IsNullOrWhiteSpace(sku))
                 throw new ArgumentException("sku");
 
+            if (price < 0)
+                throw new ArgumentException("price");
+
             if (string.IsNullOrWhiteSpace(currency))
                 throw new ArgumentException("currency");
 
             this.Id = Guid.NewGuid();
             this.Name = name;
             this.SKU = sku;
-            this.Currency = currency;
-            this.Price = 0;
+            this.Money = new Money { Amount = price, Currency = currency };
             this.Status = ProductStatus.Draft;
             this.CreatedAt = DateTime.UtcNow;
         }
@@ -34,8 +37,7 @@ namespace Domain
         public ProductStatus Status { get; private set; }
         public string Category { get; private set; }
         public string SKU { get; private set; }
-        public decimal Price { get; private set; }
-        public string Currency { get; private set; }
+        public Money Money { get; set; }
         public DateTime CreatedAt { get; private set; }
         public string Description { get; set; }
 
@@ -52,7 +54,7 @@ namespace Domain
             if (price < 0)
                 throw new ArgumentException();
 
-            this.Price = price;
+            this.Money.Amount = price;
         }
     }
 }
