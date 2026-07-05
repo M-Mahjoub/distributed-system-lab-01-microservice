@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Domain.Aggregates.Product;
 
 namespace UnitTests.Domain
 {
@@ -90,7 +91,7 @@ namespace UnitTests.Domain
             var produt = new Product("TV", "T100", "USD", 10);
             var produt2 = new Product("TV", "T100", "PHP", 10);
 
-            if (!produt.Equals(produt2))
+            if (!produt.Money.Equals(produt2.Money))
                 Assert.Pass();
 
             Assert.Fail();
