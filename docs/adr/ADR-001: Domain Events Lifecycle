@@ -1,0 +1,8 @@
+چرا Aggregate فقط Event را ذخیره می‌کند؟: 
+به این خاطر که اولا هر entity لازم ندارد برایش event یی raise شود و از طرفی چون ef می تواند کمک کند با track کردن aggregate ها بهتر اسن در aggregate ها باشد.
+چرا Aggregate خودش Event را Dispatch نمی‌کند؟
+بخاطر اینکه وظیفه application است و application هست که از domaineventhandler ها اطلاع دارد
+چرا Dispatch بعد از Commit انجام می‌شود؟
+اینو نمی دونم
+چرا بعد از Dispatch باید Eventها پاک شوند؟
+بخاطر اینکه event اتفاق افتاذه و تمام شده
