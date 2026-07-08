@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Enums
+namespace Domain.Products.Specifications
 {
-    public enum ProductStatus
+    public class ProductCanBePublishedSpecification
     {
-        Draft
     }
 }

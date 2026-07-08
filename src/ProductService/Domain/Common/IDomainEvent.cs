@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common
+﻿namespace Domain.Common
 {
     public interface IDomainEvent
     {
-        Guid EventId { get; }
+        public Guid EventId { get; }
 
-        DateTime OccurredOnUtc { get; }
+        public DateTime OccurredOnUtc { get; }
     }
 }

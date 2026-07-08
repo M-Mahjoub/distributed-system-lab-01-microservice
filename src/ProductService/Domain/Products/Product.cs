@@ -1,16 +1,21 @@
 ﻿using Domain.Common;
-using Domain.Enums;
-using Domain.Events;
-using Domain.ValueObjects;
+using Domain.Products.Events;
+using Domain.Products.Rules;
+using Domain.Products.ValueObjects;
+using System.Data;
 
-namespace Domain.Aggregates.Product
+namespace Domain.Products
 {
-    public class Product : AggregateRoot
+    public class Product : AggregateRoot<ProductId>
     {
+        private Product()
+        {
+
+        }
         public Product(string name, string sku, string currency, decimal amount)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("name");
+                throw new ArgumentException("Product name cannot be empty.", nameof(name));
 
             if (string.IsNullOrWhiteSpace(sku))
                 throw new ArgumentException("sku");
@@ -21,9 +26,9 @@ namespace Domain.Aggregates.Product
             if (string.IsNullOrWhiteSpace(currency))
                 throw new ArgumentException("currency");
 
-            Id = Guid.NewGuid();
+            Id = ProductId.New();
             Name = name;
-            SKU = sku;
+            Sku = new Sku("PRD-000");
             Money = new Money(amount, currency);
             Status = ProductStatus.Draft;
             CreatedAt = DateTime.UtcNow;
@@ -31,14 +36,42 @@ namespace Domain.Aggregates.Product
             Raise(new ProductCreated());
         }
 
-        public Guid Id { get; private set; }
         public string Name { get; private set; }
         public ProductStatus Status { get; private set; }
         public string Category { get; private set; }
-        public string SKU { get; private set; }
+        public Sku Sku { get; private set; }
         public Money Money { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public string Description { get; private set; }
+        private readonly List<string> _images = new();
+
+        public IReadOnlyCollection<string> Images
+            => _images.AsReadOnly();
+
+        public Result Publish()
+        {
+            var rules = new IBusinessRule<Product>[]
+                                             {
+                                                 new ProductMustHaveImageRule(),
+                                                 new ProductMustHaveNameRule(),
+                                                 new ProductMustHavePriceRule(),
+                                                 new ProductMustHaveSkuRule(),
+                                             };
+
+            foreach (var rule in rules)
+            {
+                var result = rule.Check(this);
+
+                if (result.IsFailure)
+                    return result;
+            }
+
+            Status = ProductStatus.Published;
+
+            Raise(new ProductPublished(this.Id));
+
+            return new Result();
+        }
 
         public void Rename(string name)
         {

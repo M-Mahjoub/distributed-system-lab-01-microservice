@@ -1,11 +1,6 @@
 ﻿using Application.Abstractions;
 using Application.Abstractions.Repositories;
-using Domain.Aggregates.Product;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Domain.Products;
 
 namespace Application.Features.Products.Create
 {

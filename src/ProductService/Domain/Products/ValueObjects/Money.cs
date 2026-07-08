@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.ValueObjects
+namespace Domain.Products.ValueObjects
 {
     public record Money
     {
         public Money(decimal amount, string currency)
         {
-            this.Amount = amount;
-            this.Currency = currency;
+            if (amount < 0)
+                throw new ArgumentException("amount");
+
+            Amount = amount;
+            Currency = currency;
         }
         public decimal Amount { get; init; }
-        public string Currency { get; }
+        public string Currency { get; init; }
     }
 }

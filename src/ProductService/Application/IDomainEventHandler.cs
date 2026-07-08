@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Application
 {
     public interface IDomainEventHandler<TEvent>
-     where TEvent : IDomainEvent
+     where TEvent : DomainEvent
     {
         Task HandleAsync(TEvent domainEvent);
     }

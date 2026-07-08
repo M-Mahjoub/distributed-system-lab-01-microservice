@@ -1,20 +1,17 @@
 ﻿using Domain.Common;
+using Domain.Products.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Events
+namespace Domain.Products.Events
 {
-    public class ProductCreated : Domain.Common.IDomainEvent
+    public sealed record ProductCreated : DomainEvent
     {
-        public Guid ProductId { get; set; }
+        public ProductId ProductId { get; }
         public string Name { get; set; }
         public string SKU { get; set; }
-
-        public Guid EventId { get; set; }
-
-        public DateTime OccurredOnUtc { get; set; }
     }
 }

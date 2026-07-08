@@ -1,5 +1,4 @@
-﻿using Domain;
-using Domain.Aggregates.Product;
+﻿using Domain.Products;
 
 namespace UnitTests.Domain
 {

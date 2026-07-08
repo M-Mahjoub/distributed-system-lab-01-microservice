@@ -1,4 +1,6 @@
-﻿using Domain.Aggregates.Product;
+﻿using Domain.Common;
+using Domain.Products;
+using Domain.Products.ValueObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace Application.Abstractions.Repositories
 {
-    public interface IProductRepository : IRepository<Product>
+    public interface IProductRepository : IRepository<Product,ProductId>
     {
+        Task<Product> GetBySkuAsync(Sku sku);
+
     }
 }

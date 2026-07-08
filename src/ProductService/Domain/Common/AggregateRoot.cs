@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Domain.Common
+﻿namespace Domain.Common
 {
-    public abstract class AggregateRoot : Entity
+    public abstract class AggregateRoot<TId> : Entity<TId>
     {
-        private readonly List<IDomainEvent> _events = new();
-        public void Raise(IDomainEvent domainEvent)
+        private readonly List<DomainEvent> _events = new();
+        public void Raise(DomainEvent domainEvent)
         {
             _events.Add(domainEvent);
         }
 
-        public IReadOnlyCollection<IDomainEvent> DomainEvents
+        public IReadOnlyCollection<DomainEvent> DomainEvents
         => _events.AsReadOnly();
 
 
-        public void ClearDomainEvents()
+        internal void ClearDomainEvents()
         {
             _events.Clear();
         }

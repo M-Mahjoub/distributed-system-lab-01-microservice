@@ -1,6 +1,5 @@
 ﻿using Application.Abstractions;
 using Application.IntegrationEvents;
-using Domain.Events;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Application.Events.ProductCreated
 {
-    public class CreateIntegrationEvent : IDomainEventHandler<Domain.Events.ProductCreated>
+    public class CreateIntegrationEvent : IDomainEventHandler<Domain.Products.Events.ProductCreated>
     {
         public IIntegrationEventStore _integrationEventStore { get; set; }
 
@@ -17,7 +16,7 @@ namespace Application.Events.ProductCreated
         {
             this._integrationEventStore = _integrationEventStore;
         }
-        public Task HandleAsync(Domain.Events.ProductCreated domainEvent)
+        public Task HandleAsync(Domain.Products.Events.ProductCreated domainEvent)
         {
             ProductCreatedIntegrationEvent productCreatedIntegrationEvent = new ProductCreatedIntegrationEvent();
             _integrationEventStore.SaveAsync(productCreatedIntegrationEvent);

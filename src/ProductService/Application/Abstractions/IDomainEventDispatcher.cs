@@ -10,7 +10,7 @@ namespace Application.Abstractions
     public interface IDomainEventDispatcher
     {
         Task DispatchAsync(
-         IReadOnlyCollection<IDomainEvent> domainEvents,
+         IReadOnlyCollection<DomainEvent> domainEvents,
          CancellationToken cancellationToken = default);
     }
 }

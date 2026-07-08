@@ -10,7 +10,7 @@ namespace Application
 {
     public class DomainEventDispatcher : IDomainEventDispatcher
     {
-        public Task DispatchAsync(IReadOnlyCollection<IDomainEvent> domainEvents, CancellationToken cancellationToken = default)
+        public Task DispatchAsync(IReadOnlyCollection<DomainEvent> domainEvents, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
